@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bonobos — Os Primatas Mais Próximos da Humanidade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       VARIÁVEIS CSS — PALETA DARK TROPICAL
+    ============================================= */
+    :root {
+      --black:       #080c0a;
+      --deep:        #0e1610;
+      --forest:      #112014;
+      --moss:        #1e3a22;
+      --bark:        #2c1e0f;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c97a;
+      --cream:       #f0e6cc;
+      --sage:        #4a7c59;
+      --sage-light:  #6dab80;
+      --muted:       #8a9e8f;
+      --glass-bg:    rgba(14, 22, 16, 0.6);
+      --glass-border:rgba(201, 168, 76, 0.15);
+      --radius:      16px;
+      --radius-lg:   28px;
+      --transition:  0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { color: var(--gold); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--gold-light); }
+
+    /* =============================================
+       TIPOGRAFIA
+    ============================================= */
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.2; }
+
+    h1 { font-size: clamp(2.4rem, 6vw, 5.5rem); font-weight: 900; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 700; }
+    h3 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 400; }
+
+    .label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    /* =============================================
+       LAYOUT UTILITÁRIOS
+    ============================================= */
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 5vw, 3rem);
+    }
+
+    section {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      position: relative;
+    }
+
+    /* Separador decorativo */
+    .section-sep {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 2.5rem;
+    }
+
+    /* =============================================
+       ANIMAÇÕES DE ENTRADA (fade-in on scroll via CSS)
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.94); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes barGrow {
+      from { width: 0; }
+      to   { width: var(--bar-w); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.35s; }
+    .reveal-delay-4 { transition-delay: 0.5s; }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.1rem 0;
+      transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(8, 12, 10, 0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.5);
+      padding: 0.7rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--cream); font-weight: 400; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(8,12,10,0.3) 0%,
+          rgba(8,12,10,0.1) 40%,
+          rgba(8,12,10,0.75) 80%,
+          rgba(8,12,10,1) 100%
+        ),
+        /* SVG jungle pattern + deep color */
+        radial-gradient(ellipse at 60% 30%, #1e3a22 0%, #080c0a 70%);
+      z-index: 0;
+    }
+
+    /* Bonobo silhouette — pure CSS illustration */
+    .hero-primate {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      width: clamp(260px, 38vw, 580px);
+      z-index: 1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Foliage decorative circles */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: rgba(30, 58, 34, 0.5);
+      top: -100px; right: -100px;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: rgba(201, 168, 76, 0.07);
+      bottom: 100px; left: -80px;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: rgba(44, 30, 15, 0.6);
+      top: 50%; right: 30%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      padding-top: 8rem;
+      padding-bottom: 5rem;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.8rem;
+      animation: fadeIn 1s ease both;
+    }
+    .hero-tag span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hero-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    .hero-title {
+      animation: fadeUp 1s ease 0.2s both;
+      margin-bottom: 1.4rem;
+      background: linear-gradient(135deg, var(--cream) 0%, var(--gold-light) 60%, var(--sage-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-sci {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--sage-light);
+      letter-spacing: 0.08em;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    .btn-explore {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      padding: 0.9rem 2.2rem;
+      border-radius: 100px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      animation: fadeUp 1s ease 0.6s both;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-explore::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--sage));
+      opacity: 0;
+      transition: opacity var(--transition);
+      z-index: -1;
+    }
+    .btn-explore:hover {
+      color: var(--black);
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(201,168,76,0.3);
+    }
+    .btn-explore:hover::before { opacity: 1; }
+    .btn-arrow { font-size: 1rem; transition: transform var(--transition); }
+    .btn-explore:hover .btn-arrow { transform: translateX(4px); }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 2;
+      animation: fadeIn 2s ease 1.5s both;
+    }
+    .hero-scroll span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse 2s ease infinite;
+    }
+
+    /* leaf decorations */
+    .hero-leaf {
+      position: absolute;
+      z-index: 1;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    /* =============================================
+       GRANDES PRIMATAS — CARDS
+    ============================================= */
+    #primatas {
+      background: linear-gradient(180deg, var(--black) 0%, var(--deep) 100%);
+    }
+
+    .primatas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .primate-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.6rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .primate-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--sage));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .primate-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.1);
+    }
+    .primate-card:hover::before { opacity: 1; }
+
+    /* CSS Icon per primate */
+    .primate-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+    .primate-icon.bonobo  { background: linear-gradient(135deg, #1e3a22, #2c4a30); border: 1px solid var(--gold); }
+    .primate-icon.chimp   { background: linear-gradient(135deg, #2c1e0f, #4a3020); border: 1px solid rgba(201,168,76,0.4); }
+    .primate-icon.gorilla { background: linear-gradient(135deg, #0e1610, #1e2e20); border: 1px solid rgba(109,171,128,0.4); }
+    .primate-icon.orang   { background: linear-gradient(135deg, #3a2010, #5a3818); border: 1px solid rgba(201,168,76,0.3); }
+    .primate-icon.human   { background: linear-gradient(135deg, #1a1a2e, #2a2a4e); border: 1px solid rgba(201,168,76,0.2); }
+
+    .primate-card h3 {
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .primate-sci {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--sage-light);
+      letter-spacing: 0.05em;
+      font-style: italic;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .primate-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding-bottom: 0.4rem;
+    }
+    .stat-row .stat-label { color: var(--muted); }
+    .stat-row .stat-val { color: var(--gold-light); font-family: 'Space Mono', monospace; font-size: 0.75rem; }
+
+    /* Highlight card for bonobo */
+    .primate-card.featured {
+      border-color: rgba(201,168,76,0.35);
+      background: linear-gradient(135deg, rgba(30,58,34,0.5), rgba(14,22,16,0.7));
+      grid-column: span 1;
+    }
+    .featured-badge {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      font-weight: 700;
+    }
+
+    /* =============================================
+       BONOBO — SEÇÃO PRINCIPAL
+    ============================================= */
+    #bonobo {
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bonobo-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(30,58,34,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(44,30,15,0.2) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .bonobo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    .bonobo-portrait {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    /* Pure CSS Bonobo face illustration */
+    .bonobo-face-art {
+      width: 100%;
+      padding-bottom: 110%;
+      position: relative;
+      background: linear-gradient(145deg, #1a2e1e, #0e1610);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(201,168,76,0.2);
+      overflow: hidden;
+    }
+    .bonobo-face-art::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(30,58,34,0.4) 0%, transparent 70%);
+    }
+
+    /* Decorative elements inside portrait */
+    .portrait-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* SVG bonobo inline */
+    .bonobo-svg {
+      width: 85%;
+      max-width: 320px;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.7));
+    }
+
+    .portrait-label {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      background: rgba(8,12,10,0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: var(--radius);
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .portrait-label .sci-name {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--sage-light);
+    }
+    .portrait-label .discovery {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      text-align: right;
+    }
+
+    .bonobo-text h2 { margin-bottom: 1rem; }
+    .bonobo-text .section-sep { margin-bottom: 1.5rem; }
+
+    .bonobo-text p {
+      margin-bottom: 1.2rem;
+      color: rgba(240,230,204,0.85);
+    }
+
+    /* Info pills */
+    .info-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1.5rem 0;
+    }
+    .pill {
+      background: rgba(30,58,34,0.4);
+      border: 1px solid rgba(109,171,128,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      color: var(--sage-light);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Trait grid */
+    .trait-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .trait-card {
+      background: rgba(14,22,16,0.6);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .trait-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: scale(1.02);
+    }
+    .trait-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .trait-card h4 { font-size: 0.9rem; color: var(--gold-light); margin-bottom: 0.3rem; font-family: 'Space Mono', monospace; letter-spacing: 0.05em; }
+    .trait-card p { font-size: 0.85rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+    /* Timeline evolutiva */
+    .timeline {
+      margin-top: 4rem;
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      transform: translateX(-50%);
+    }
+    .timeline-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      align-items: center;
+      gap: 1rem;
+    }
+    .timeline-item:nth-child(even) .tl-content { grid-column: 3; grid-row: 1; }
+    .timeline-item:nth-child(even) .tl-empty   { grid-column: 1; grid-row: 1; }
+    .tl-content {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .tl-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 0 2px var(--gold);
+      justify-self: center;
+      z-index: 1;
+    }
+    .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .tl-content h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .tl-content p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+    .tl-empty { display: none; }
+
+    /* =============================================
+       COMPARAÇÃO BONOBO vs CHIMPANZÉ
+    ============================================= */
+    #comparacao {
+      background: linear-gradient(180deg, var(--deep) 0%, var(--forest) 100%);
+    }
+
+    .compare-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    table.compare {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table.compare thead th {
+      background: rgba(14,22,16,0.9);
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    table.compare thead th:nth-child(2) { color: var(--gold); }
+    table.compare thead th:nth-child(3) { color: var(--sage-light); }
+    table.compare tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background var(--transition);
+    }
+    table.compare tbody tr:hover { background: rgba(30,58,34,0.15); }
+    table.compare tbody td {
+      padding: 1rem 1.5rem;
+      vertical-align: top;
+    }
+    table.compare tbody td:first-child {
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    table.compare tbody td:nth-child(2) { color: var(--gold-light); }
+    table.compare tbody td:nth-child(3) { color: var(--sage-light); }
+
+    .compare-icons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .compare-hero-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      transition: transform var(--transition);
+    }
+    .compare-hero-card:hover { transform: translateY(-5px); }
+    .compare-hero-card .big-emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+    .compare-hero-card h3 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .compare-hero-card .sci { font-style: italic; color: var(--sage-light); font-size: 0.85rem; }
+
+    /* =============================================
+       MORFOLOGIA
+    ============================================= */
+    #morfologia {
+      background: var(--forest);
+    }
+
+    .morfo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* CSS skeleton illustration */
+    .skeleton-art {
+      background: linear-gradient(145deg, #0e1610, #1a2e1e);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .skeleton-art h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Body proportion chart */
+    .proportion-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 1.5rem 0;
+    }
+    .prop-figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .prop-body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .prop-head {
+      border-radius: 50%;
+      background: var(--sage);
+      margin-bottom: 2px;
+    }
+    .prop-torso {
+      background: var(--sage);
+      border-radius: 4px;
+    }
+    .prop-arms {
+      display: flex;
+      gap: 2px;
+      margin-top: -50%;
+    }
+    .prop-arm {
+      background: rgba(109,171,128,0.7);
+      border-radius: 3px;
+    }
+    .prop-legs {
+      display: flex;
+      gap: 2px;
+      margin-top: 2px;
+    }
+    .prop-leg {
+      background: rgba(109,171,128,0.8);
+      border-radius: 3px;
+    }
+    .prop-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    .prop-height {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .morfo-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .morfo-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+    .morfo-num {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--moss), var(--sage));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .morfo-text h4 { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.25rem; }
+    .morfo-text p { font-size: 0.88rem; color: var(--muted); margin: 0; }
+
+    /* Bar chart CSS */
+    .bar-chart {
+      margin-top: 2rem;
+    }
+    .bar-chart h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .bar-name {
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-width: 90px;
+      text-align: right;
+    }
+    .bar-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--sage), var(--gold));
+      width: 0;
+      transition: width 1.5s ease 0.3s;
+    }
+    .bar-row.visible .bar-fill { width: var(--bar-w); }
+    .bar-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      min-width: 38px;
+    }
+
+    /* =============================================
+       EVOLUÇÃO — LINHA DO TEMPO
+    ============================================= */
+    #evolucao {
+      background: linear-gradient(180deg, var(--forest) 0%, var(--deep) 100%);
+    }
+
+    .evo-timeline {
+      position: relative;
+      margin-top: 2rem;
+    }
+    .evo-line {
+      position: absolute;
+      left: 24px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));
+    }
+    .evo-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .evo-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding-bottom: 2.5rem;
+    }
+    .evo-marker {
+      flex-shrink: 0;
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .evo-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--deep);
+      box-shadow: 0 0 0 2px var(--gold), 0 0 20px rgba(201,168,76,0.3);
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .evo-mya {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-align: center;
+      margin-top: 0.3rem;
+      white-space: nowrap;
+    }
+    .evo-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      flex: 1;
+      margin-top: -4px;
+      transition: border-color var(--transition);
+    }
+    .evo-card:hover { border-color: rgba(201,168,76,0.3); }
+    .evo-card h4 { font-size: 1.05rem; color: var(--cream); margin-bottom: 0.4rem; }
+    .evo-card p { font-size: 0.88rem; color: var(--muted); margin: 0; }
+
+    /* DNA similarity bar */
+    .dna-bars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .dna-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .dna-pct {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .dna-desc { font-size: 0.82rem; color: var(--muted); }
+    .dna-bar-track {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .dna-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--sage), var(--gold));
+    }
+
+    /* =============================================
+       CONSERVAÇÃO
+    ============================================= */
+    #conservacao {
+      background: var(--deep);
+      position: relative;
+    }
+
+    .threat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .threat-card {
+      background: linear-gradient(145deg, rgba(44,14,14,0.4), rgba(14,22,16,0.5));
+      border: 1px solid rgba(180,60,60,0.2);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .threat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(180,60,60,0.4);
+    }
+    .threat-emoji { font-size: 2.2rem; display: block; margin-bottom: 0.7rem; }
+    .threat-card h4 { font-size: 0.95rem; color: #e88; margin-bottom: 0.4rem; }
+    .threat-card p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+
+    /* Population counter */
+    .pop-counter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .pop-box {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+    }
+    .pop-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--sage-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .pop-label { font-size: 0.85rem; color: var(--muted); }
+    .pop-trend { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: #e88; margin-top: 0.5rem; }
+
+    /* Extinction risk bar */
+    .risk-section {
+      background: rgba(14,22,16,0.5);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+    .risk-section h3 { margin-bottom: 1.5rem; }
+    .risk-scale {
+      display: flex;
+      border-radius: 100px;
+      overflow: hidden;
+      height: 16px;
+      margin-bottom: 1rem;
+    }
+    .risk-seg {
+      flex: 1;
+      position: relative;
+    }
+    .rs-lc { background: #2d6a4f; }
+    .rs-nt { background: #52b788; }
+    .rs-vu { background: #f4a261; }
+    .rs-en { background: #e76f51; }
+    .rs-cr { background: #c1121f; }
+    .rs-ew { background: #6d023a; }
+    .rs-ex { background: #2d2d2d; }
+
+    .risk-pointer {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 14.28%;
+      margin-top: 0.3rem;
+    }
+    .risk-arrow {
+      font-size: 0.8rem;
+      color: var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .risk-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+    .risk-labels span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* =============================================
+       CURIOSIDADES
+    ============================================= */
+    #curiosidades {
+      background: linear-gradient(180deg, var(--deep) 0%, var(--forest) 100%);
+    }
+
+    .curiosity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .curiosity-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .curiosity-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .curiosity-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(201,168,76,0.3);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    }
+    .curiosity-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(201,168,76,0.12);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .curiosity-card h4 { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.6rem; }
+    .curiosity-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    /* =============================================
+       GALERIA
+    ============================================= */
+    #galeria {
+      background: var(--forest);
+      padding-bottom: 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #1e3a22, #0e1610);
+      cursor: pointer;
+    }
+    .gallery-item .gi-inner {
+      padding-bottom: 70%;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-item:nth-child(1) { grid-column: span 5; }
+    .gallery-item:nth-child(2) { grid-column: span 4; }
+    .gallery-item:nth-child(3) { grid-column: span 3; }
+    .gallery-item:nth-child(4) { grid-column: span 3; }
+    .gallery-item:nth-child(5) { grid-column: span 5; }
+    .gallery-item:nth-child(6) { grid-column: span 4; }
+
+    .gi-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .gi-emoji { font-size: 3rem; display: block; margin-bottom: 0.8rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+    .gi-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,12,10,0.9) 0%, rgba(8,12,10,0) 50%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .gi-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.2rem;
+      transform: translateY(100%);
+      transition: transform var(--transition);
+    }
+    .gi-caption h4 { font-size: 0.9rem; color: var(--cream); margin-bottom: 0.2rem; }
+    .gi-caption p { font-size: 0.75rem; color: var(--muted); margin: 0; }
+    .gallery-item:hover .gi-overlay { opacity: 1; }
+    .gallery-item:hover .gi-caption { transform: translateY(0); }
+
+    /* gradient overlays per item */
+    .gi-bg-1 { background: linear-gradient(145deg, #1a2e1e, #2c3a20); }
+    .gi-bg-2 { background: linear-gradient(145deg, #2a1e10, #3a2818); }
+    .gi-bg-3 { background: linear-gradient(145deg, #0e1e14, #1e3028); }
+    .gi-bg-4 { background: linear-gradient(145deg, #1e2010, #2a2e18); }
+    .gi-bg-5 { background: linear-gradient(145deg, #102028, #183038); }
+    .gi-bg-6 { background: linear-gradient(145deg, #201018, #2e1820); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .footer-col a:hover { color: var(--sage-light); }
+
+    .footer-social {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .social-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+    .social-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .footer-credits {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(138,158,143,0.5);
+      letter-spacing: 0.08em;
+    }
+
+    /* =============================================
+       RESPONSIVIDADE
+    ============================================= */
+    @media (max-width: 1024px) {
+      .bonobo-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .morfo-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .dna-bars { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(1) { grid-column: span 6; }
+      .gallery-item:nth-child(2) { grid-column: span 6; }
+      .gallery-item:nth-child(3) { grid-column: span 4; }
+      .gallery-item:nth-child(4) { grid-column: span 4; }
+      .gallery-item:nth-child(5) { grid-column: span 4; }
+      .gallery-item:nth-child(6) { grid-column: span 12; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgba(8,12,10,0.97);
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(201,168,76,0.1);
+      }
+      .nav-burger { display: flex; }
+
+      .hero-primate { width: 60vw; right: 0; opacity: 0.35; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .tl-empty { display: none; }
+      .tl-dot { display: none; }
+      .timeline-line { display: none; }
+      .compare-icons { grid-template-columns: 1fr 1fr; }
+      .pop-counter { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-item { grid-column: span 12 !important; }
+      .gallery-item .gi-inner { padding-bottom: 60%; }
+      .dna-bars { grid-template-columns: 1fr; }
+      .trait-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .primatas-grid { grid-template-columns: 1fr; }
+      .compare-icons { grid-template-columns: 1fr; }
+      .pop-counter { grid-template-columns: 1fr; }
+      .threat-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* =============================================
+       MISC UTILITIES
+    ============================================= */
+    .gold { color: var(--gold); }
+    .sage { color: var(--sage-light); }
+    .mt-1 { margin-top: 1rem; }
+    .mt-2 { margin-top: 2rem; }
+    .mt-3 { margin-top: 3rem; }
+    .text-center { text-align: center; }
+
+    /* Noise texture overlay on hero */
+    .noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 3;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-logo">PRIMATE<span>LAB</span></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#primatas">Primatas</a></li>
+        <li><a href="#bonobo">Bonobo</a></li>
+        <li><a href="#comparacao">Comparação</a></li>
+        <li><a href="#morfologia">Morfologia</a></li>
+        <li><a href="#evolucao">Evolução</a></li>
+        <li><a href="#conservacao">Conservação</a></li>
+        <li><a href="#curiosidades">Curiosidades</a></li>
+      </ul>
+      <div class="nav-burger" id="burger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="noise"></div>
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="hero-orb orb-3"></div>
+
+  <!-- SVG Bonobo silhouette, decorative -->
+  <div class="hero-primate" aria-hidden="true">
+    <svg viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Head -->
+      <ellipse cx="150" cy="80" rx="62" ry="68" fill="rgba(30,58,34,0.5)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+      <!-- Face dark area -->
+      <ellipse cx="150" cy="90" rx="38" ry="44" fill="rgba(8,12,10,0.6)"/>
+      <!-- Eyes -->
+      <circle cx="133" cy="78" r="7" fill="rgba(201,168,76,0.6)"/>
+      <circle cx="167" cy="78" r="7" fill="rgba(201,168,76,0.6)"/>
+      <circle cx="134" cy="79" r="4" fill="#080c0a"/>
+      <circle cx="168" cy="79" r="4" fill="#080c0a"/>
+      <circle cx="132" cy="77" r="1.5" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="166" cy="77" r="1.5" fill="rgba(255,255,255,0.6)"/>
+      <!-- Nose -->
+      <ellipse cx="150" cy="96" rx="12" ry="8" fill="rgba(8,12,10,0.7)"/>
+      <!-- Mouth / lips -->
+      <path d="M135 112 Q150 122 165 112" stroke="rgba(201,168,76,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Ears -->
+      <ellipse cx="88" cy="75" rx="16" ry="20" fill="rgba(30,58,34,0.5)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+      <ellipse cx="212" cy="75" rx="16" ry="20" fill="rgba(30,58,34,0.5)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+      <!-- Body -->
+      <path d="M100 148 Q80 200 75 280 Q75 340 150 350 Q225 340 225 280 Q220 200 200 148 Q175 138 150 136 Q125 138 100 148Z" fill="rgba(30,58,34,0.45)" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+      <!-- Left arm -->
+      <path d="M100 158 Q50 200 40 280 Q38 300 60 308 Q70 285 80 260 Q95 220 110 190Z" fill="rgba(30,58,34,0.4)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+      <!-- Right arm -->
+      <path d="M200 158 Q250 200 260 280 Q262 300 240 308 Q230 285 220 260 Q205 220 190 190Z" fill="rgba(30,58,34,0.4)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+      <!-- Hands -->
+      <ellipse cx="55" cy="312" rx="18" ry="12" fill="rgba(8,12,10,0.5)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+      <ellipse cx="245" cy="312" rx="18" ry="12" fill="rgba(8,12,10,0.5)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+      <!-- Legs -->
+      <path d="M118 340 Q105 360 100 380" stroke="rgba(30,58,34,0.6)" stroke-width="20" stroke-linecap="round"/>
+      <path d="M182 340 Q195 360 200 380" stroke="rgba(30,58,34,0.6)" stroke-width="20" stroke-linecap="round"/>
+      <!-- Subtle fur texture lines -->
+      <path d="M110 170 Q105 185 108 200" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <path d="M190 170 Q195 185 192 200" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <path d="M130 240 Q125 260 128 280" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+      <path d="M170 240 Q175 260 172 280" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <div class="hero-dot"></div>
+        <span>Documentário Científico Interativo</span>
+      </div>
+      <h1 class="hero-title">Bonobos:<br>Os Primatas Mais<br>Próximos da Humanidade</h1>
+      <p class="hero-sub">Uma jornada pela ciência, evolução e comportamento do nosso parente genético mais próximo — compartilhamos 98,7% do DNA.</p>
+      <span class="hero-sci">Pan paniscus · Bonobo Pigmeu · Descoberto em 1929</span>
+      <br>
+      <a href="#primatas" class="btn-explore">
+        Explorar <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Rolar</span>
+  </div>
+</section>
+
+<!-- ========== GRANDES PRIMATAS ========== -->
+<section id="primatas">
+  <div class="container">
+    <span class="label">Taxonomia & Classificação</span>
+    <h2 class="section-title reveal">O Que São os<br><em>Grandes Primatas?</em></h2>
+    <div class="section-sep"></div>
+    <p class="section-intro reveal reveal-delay-1">Os grandes primatas — ou hominídeos — formam a família Hominidae, um grupo de primatas sem cauda com cérebros complexos, alta inteligência social e capacidade cognitiva sem precedentes no reino animal.</p>
+
+    <div class="primatas-grid">
+      <!-- Bonobo FEATURED -->
+      <div class="primate-card featured reveal reveal-delay-1">
+        <span class="featured-badge">● Destaque</span>
+        <div class="primate-icon bonobo">🐒</div>
+        <h3>Bonobo</h3>
+        <span class="primate-sci">Pan paniscus</span>
+        <div class="primate-stats">
+          <div class="stat-row"><span class="stat-label">Altura</span><span class="stat-val">70–90 cm</span></div>
+          <div class="stat-row"><span class="stat-label">Peso</span><span class="stat-val">30–60 kg</span></div>
+          <div class="stat-row"><span class="stat-label">DNA c/ humanos</span><span class="stat-val">98.7%</span></div>
+          <div class="stat-row"><span class="stat-label">Habitat</span><span class="stat-val">Congo, África</span></div>
+          <div class="stat-row"><span class="stat-label">Social</span><span class="stat-val">Matriarcal</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-val gold">Em Perigo</span></div>
+        </div>
+      </div>
+
+      <!-- Chimpanzé -->
+      <div class="primate-card reveal reveal-delay-2">
+        <div class="primate-icon chimp">🐵</div>
+        <h3>Chimpanzé</h3>
+        <span class="primate-sci">Pan troglodytes</span>
+        <div class="primate-stats">
+          <div class="stat-row"><span class="stat-label">Altura</span><span class="stat-val">70–120 cm</span></div>
+          <div class="stat-row"><span class="stat-label">Peso</span><span class="stat-val">32–60 kg</span></div>
+          <div class="stat-row"><span class="stat-label">DNA c/ humanos</span><span class="stat-val">98.6%</span></div>
+          <div class="stat-row"><span class="stat-label">Habitat</span><span class="stat-val">Oeste/Central África</span></div>
+          <div class="stat-row"><span class="stat-label">Social</span><span class="stat-val">Patriarcal</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-val gold">Em Perigo</span></div>
+        </div>
+      </div>
+
+      <!-- Gorila -->
+      <div class="primate-card reveal reveal-delay-3">
+        <div class="primate-icon gorilla">🦍</div>
+        <h3>Gorila</h3>
+        <span class="primate-sci">Gorilla gorilla</span>
+        <div class="primate-stats">
+          <div class="stat-row"><span class="stat-label">Altura</span><span class="stat-val">1.5–1.8 m</span></div>
+          <div class="stat-row"><span class="stat-label">Peso</span><span class="stat-val">70–200 kg</span></div>
+          <div class="stat-row"><span class="stat-label">DNA c/ humanos</span><span class="stat-val">98.3%</span></div>
+          <div class="stat-row"><span class="stat-label">Habitat</span><span class="stat-val">Florestas Africanas</span></div>
+          <div class="stat-row"><span class="stat-label">Social</span><span class="stat-val">Harém / Silverback</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-val gold">Criticamente Em Perigo</span></div>
+        </div>
+      </div>
+
+      <!-- Orangotango -->
+      <div class="primate-card reveal reveal-delay-4">
+        <div class="primate-icon orang">🦧</div>
+        <h3>Orangotango</h3>
+        <span class="primate-sci">Pongo pygmaeus</span>
+        <div class="primate-stats">
+          <div class="stat-row"><span class="stat-label">Altura</span><span class="stat-val">1.2–1.5 m</span></div>
+          <div class="stat-row"><span class="stat-label">Peso</span><span class="stat-val">30–90 kg</span></div>
+          <div class="stat-row"><span class="stat-label">DNA c/ humanos</span><span class="stat-val">96.9%</span></div>
+          <div class="stat-row"><span class="stat-label">Habitat</span><span class="stat-val">Bornéu / Sumatra</span></div>
+          <div class="stat-row"><span class="stat-label">Social</span><span class="stat-val">Solitário</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-val gold">Criticamente Em Perigo</span></div>
+        </div>
+      </div>
+
+      <!-- Humano -->
+      <div class="primate-card reveal reveal-delay-2">
+        <div class="primate-icon human">🧬</div>
+        <h3>Humano</h3>
+        <span class="primate-sci">Homo sapiens</span>
+        <div class="primate-stats">
+          <div class="stat-row"><span class="stat-label">Altura</span><span class="stat-val">1.5–1.9 m</span></div>
+          <div class="stat-row"><span class="stat-label">Peso</span><span class="stat-val">50–100 kg</span></div>
+          <div class="stat-row"><span class="stat-label">Cérebro</span><span class="stat-val">~1400 cm³</span></div>
+          <div class="stat-row"><span class="stat-label">Habitat</span><span class="stat-val">Global</span></div>
+          <div class="stat-row"><span class="stat-label">Social</span><span class="stat-val">Variável</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-val sage">Mínima Preocupação</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BONOBO PRINCIPAL ========== -->
+<section id="bonobo">
+  <div class="bonobo-bg-pattern"></div>
+  <div class="container">
+    <span class="label">Espécie em Foco</span>
+    <div class="bonobo-grid">
+      <!-- Ilustração -->
+      <div class="reveal">
+        <div class="bonobo-face-art">
+          <div class="portrait-inner">
+            <!-- SVG detalhado do rosto do bonobo -->
+            <svg class="bonobo-svg" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Head shape -->
+              <ellipse cx="150" cy="140" rx="100" ry="110" fill="#1a2e1e" stroke="rgba(201,168,76,0.25)" stroke-width="1.5"/>
+              <!-- Forehead crest -->
+              <path d="M100 80 Q150 50 200 80" stroke="rgba(109,171,128,0.3)" stroke-width="2" fill="none"/>
+              <!-- Face plate (dark) -->
+              <ellipse cx="150" cy="158" rx="68" ry="78" fill="#080c0a"/>
+              <!-- Brow ridge -->
+              <path d="M90 115 Q150 100 210 115" stroke="rgba(30,58,34,0.8)" stroke-width="8" stroke-linecap="round"/>
+              <!-- Eyes -->
+              <ellipse cx="120" cy="130" rx="16" ry="14" fill="#1e3a22" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+              <ellipse cx="180" cy="130" rx="16" ry="14" fill="#1e3a22" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+              <circle cx="121" cy="131" r="10" fill="#080c0a"/>
+              <circle cx="181" cy="131" r="10" fill="#080c0a"/>
+              <circle cx="118" cy="128" r="3.5" fill="rgba(255,255,255,0.15)"/>
+              <circle cx="178" cy="128" r="3.5" fill="rgba(255,255,255,0.15)"/>
+              <!-- Nose bridge -->
+              <rect x="140" y="145" width="20" height="3" rx="2" fill="#1e3a22"/>
+              <!-- Nose -->
+              <ellipse cx="150" cy="168" rx="24" ry="18" fill="#0e1610"/>
+              <ellipse cx="137" cy="171" rx="9" ry="7" fill="#1e2e1c"/>
+              <ellipse cx="163" cy="171" rx="9" ry="7" fill="#1e2e1c"/>
+              <!-- Philtrum -->
+              <path d="M150 186 L150 196" stroke="rgba(109,171,128,0.3)" stroke-width="1.5"/>
+              <!-- Lips -->
+              <path d="M122 200 Q137 193 150 196 Q163 193 178 200" stroke="rgba(201,168,76,0.5)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M122 200 Q150 216 178 200" stroke="rgba(201,168,76,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Cheeks / face texture -->
+              <ellipse cx="105" cy="158" rx="12" ry="18" fill="rgba(30,58,34,0.3)"/>
+              <ellipse cx="195" cy="158" rx="12" ry="18" fill="rgba(30,58,34,0.3)"/>
+              <!-- Ears -->
+              <ellipse cx="50" cy="132" rx="22" ry="28" fill="#1a2e1e" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <ellipse cx="250" cy="132" rx="22" ry="28" fill="#1a2e1e" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <ellipse cx="50" cy="132" rx="12" ry="18" fill="#080c0a"/>
+              <ellipse cx="250" cy="132" rx="12" ry="18" fill="#080c0a"/>
+              <!-- Chin -->
+              <ellipse cx="150" cy="228" rx="28" ry="16" fill="#0a0f0c"/>
+              <!-- Neck -->
+              <rect x="120" y="240" width="60" height="100" rx="28" fill="#1a2e1e" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+              <!-- Collar highlight -->
+              <path d="M120 265 Q150 278 180 265" stroke="rgba(201,168,76,0.1)" stroke-width="1" fill="none"/>
+              <!-- Hair texture lines -->
+              <path d="M70 90 Q80 80 90 90" stroke="rgba(109,171,128,0.15)" stroke-width="1.5" fill="none"/>
+              <path d="M200 85 Q215 75 225 88" stroke="rgba(109,171,128,0.15)" stroke-width="1.5" fill="none"/>
+              <path d="M55 110 Q65 100 72 112" stroke="rgba(109,171,128,0.1)" stroke-width="1" fill="none"/>
+              <path d="M228 108 Q238 98 246 110" stroke="rgba(109,171,128,0.1)" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <div class="portrait-label">
+            <span class="sci-name">Pan paniscus</span>
+            <span class="discovery">Descoberto: 1929<br>Ernst Schwarz</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div class="bonobo-text reveal reveal-delay-2">
+        <span class="label">Pan paniscus</span>
+        <h2 class="section-title">O Bonobo:<br><em>Natureza da Paz</em></h2>
+        <div class="section-sep"></div>
+        <p>O bonobo (<em>Pan paniscus</em>), também conhecido como chimpanzé-pigmeu, é considerado junto ao chimpanzé-comum o animal mais próximo geneticamente dos seres humanos. Compartilhamos 98,7% do DNA com eles — uma proximidade que revela profundas lições sobre a natureza humana.</p>
+        <p>Descoberto oficialmente em 1929 pelo zoólogo alemão Ernst Schwarz ao examinar um crânio classificado erroneamente, o bonobo habita exclusivamente as florestas equatoriais da República Democrática do Congo, ao sul do Rio Congo — barreira natural que os separou dos chimpanzés há cerca de 2 milhões de anos.</p>
+        <p>Diferente de outros grandes primatas, o bonobo desenvolveu uma estrutura social extraordinária: matriarcal, cooperativa e notavelmente pacífica. As fêmeas dominam a hierarquia social e utilizam laços afiliativospara mediar conflitos, tornando-os um dos animais mais empáticos já estudados.</p>
+
+        <div class="info-pills">
+          <span class="pill">🌿 Congo, África</span>
+          <span class="pill">🧬 98.7% DNA humano</span>
+          <span class="pill">👑 Estrutura Matriarcal</span>
+          <span class="pill">🕊️ Comportamento Pacífico</span>
+          <span class="pill">🧠 Alta Inteligência</span>
+        </div>
+
+        <div class="trait-grid">
+          <div class="trait-card">
+            <div class="trait-icon">🧠</div>
+            <h4>Inteligência Social</h4>
+            <p>Capazes de aprender linguagem de sinais, resolver problemas abstratos e demonstrar empatia com indivíduos desconhecidos.</p>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">👑</div>
+            <h4>Sociedade Matriarcal</h4>
+            <p>Fêmeas formam alianças poderosas que superam machos individualmente, controlando o acesso a recursos e mediando conflitos.</p>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">🛠️</div>
+            <h4>Uso de Ferramentas</h4>
+            <p>Utilizam galhos como alavancas, folhas como guarda-chuva e pedras para quebrar nozes, transmitindo conhecimento culturalmente.</p>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">💬</div>
+            <h4>Comunicação Rica</h4>
+            <p>Possuem repertório vocal extenso, linguagem gestual sofisticada e demonstram compreensão simbólica em estudos com lexigramas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline evolutiva -->
+    <div class="timeline reveal">
+      <h3 class="text-center" style="margin-bottom:3rem">
+        <span class="label" style="text-align:center;display:block">Linha do Tempo</span>
+        <em>Jornada Evolutiva do Bonobo</em>
+      </h3>
+      <div class="timeline-line"></div>
+      <div class="timeline-items">
+        <div class="timeline-item">
+          <div class="tl-content">
+            <span class="tl-year">~ 7 M.a.a.</span>
+            <h4>Ancestral Comum com Humanos</h4>
+            <p>O último ancestral comum de Homo sapiens e do clado Pan existiu há aproximadamente 7 milhões de anos na África.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-empty"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-year">~ 2 M.a.a.</span>
+            <h4>Separação: Bonobo × Chimpanzé</h4>
+            <p>O Rio Congo surgiu como barreira geográfica, isolando as populações ao sul (futuro bonobo) das do norte (chimpanzé).</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-content">
+            <span class="tl-year">1929</span>
+            <h4>Descoberta Científica</h4>
+            <p>Ernst Schwarz reclassifica um crânio de "chimpanzé jovem" como uma nova espécie: Pan satyrus paniscus — posteriormente Pan paniscus.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-empty"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-year">1954–1970s</span>
+            <h4>Primeiros Estudos de Campo</h4>
+            <p>Eduard Tratz e Heinz Heck descrevem comportamentos únicos. Pesquisas sistemáticas iniciam-se na República Democrática do Congo.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-content">
+            <span class="tl-year">1980s–Hoje</span>
+            <h4>Revolução no Conhecimento</h4>
+            <p>Frans de Waal e outros primatólogos revelam complexidade social sem precedentes: empatia, altruísmo e inteligência emocional.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-empty"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMPARAÇÃO ========== -->
+<section id="comparacao">
+  <div class="container">
+    <span class="label">Análise Comparativa</span>
+    <h2 class="section-title reveal">Bonobo <em>versus</em><br>Chimpanzé Comum</h2>
+    <div class="section-sep"></div>
+    <p class="section-intro reveal reveal-delay-1">Apesar de 99,6% de identidade genética entre si, bonobos e chimpanzés exibem diferenças comportamentais e morfológicas fascinantes — um estudo de como a geografia molda a evolução social.</p>
+
+    <div class="compare-icons reveal reveal-delay-2">
+      <div class="compare-hero-card">
+        <span class="big-emoji">🐒</span>
+        <h3>Bonobo</h3>
+        <p class="sci">Pan paniscus</p>
+      </div>
+      <div class="compare-hero-card">
+        <span class="big-emoji">🐵</span>
+        <h3>Chimpanzé</h3>
+        <p class="sci">Pan troglodytes</p>
+      </div>
+    </div>
+
+    <div class="compare-table-wrap reveal reveal-delay-3">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>🐒 Bonobo</th>
+            <th>🐵 Chimpanzé</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Estrutura Social</td>
+            <td>Matriarcal — fêmeas dominam</td>
+            <td>Patriarcal — machos dominam</td>
+          </tr>
+          <tr>
+            <td>Agressividade</td>
+            <td>Muito baixa; raramente violento</td>
+            <td>Alta; guerras territoriais, infanticídio</td>
+          </tr>
+          <tr>
+            <td>Resolução de Conflitos</td>
+            <td>Afiliação social e reconciliação</td>
+            <td>Dominância física e coalizões</td>
+          </tr>
+          <tr>
+            <td>Altura Média</td>
+            <td>70–90 cm (menores)</td>
+            <td>70–120 cm (maiores)</td>
+          </tr>
+          <tr>
+            <td>Dimorfismo Sexual</td>
+            <td>Mínimo — sexos semelhantes</td>
+            <td>Acentuado — machos maiores</td>
+          </tr>
+          <tr>
+            <td>Rosto / Face</td>
+            <td>Lábios rosados, face mais escura</td>
+            <td>Face clara, lábios mais claros</td>
+          </tr>
+          <tr>
+            <td>Postura</td>
+            <td>Mais ereta, bipedia frequente</td>
+            <td>Mais curvada, bipedia rara</td>
+          </tr>
+          <tr>
+            <td>Cooperação com Estranhos</td>
+            <td>Alta — compartilham comida com desconhecidos</td>
+            <td>Baixa — defensivos com outsiders</td>
+          </tr>
+          <tr>
+            <td>Empatia</td>
+            <td>Muito desenvolvida; consolam feridos</td>
+            <td>Presente, mas menos expressiva</td>
+          </tr>
+          <tr>
+            <td>Vocalização</td>
+            <td>Aguda, alta frequência; rico repertório</td>
+            <td>Mais grave; gritos de dominância</td>
+          </tr>
+          <tr>
+            <td>Alimentação</td>
+            <td>Onívoro, preferencialmente frutas</td>
+            <td>Onívoro, inclui caça ativa</td>
+          </tr>
+          <tr>
+            <td>Habitat</td>
+            <td>Sul do Rio Congo, RDC</td>
+            <td>Oeste e Centro da África</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MORFOLOGIA ========== -->
+<section id="morfologia">
+  <div class="container">
+    <span class="label">Biologia & Anatomia</span>
+    <h2 class="section-title reveal">Morfologia<br><em>do Bonobo</em></h2>
+    <div class="section-sep"></div>
+
+    <div class="morfo-grid">
+      <!-- Diagrama CSS -->
+      <div class="reveal">
+        <div class="skeleton-art">
+          <h4>Proporções Comparativas</h4>
+          <div class="proportion-chart">
+            <!-- Bonobo -->
+            <div class="prop-figure">
+              <div class="prop-body">
+                <div class="prop-head" style="width:28px;height:28px;"></div>
+                <div style="display:flex;gap:2px;margin-top:3px">
+                  <div class="prop-arm" style="width:8px;height:55px;border-radius:4px;"></div>
+                  <div class="prop-torso" style="width:22px;height:48px;"></div>
+                  <div class="prop-arm" style="width:8px;height:55px;border-radius:4px;"></div>
+                </div>
+                <div style="display:flex;gap:4px;margin-top:2px;justify-content:center">
+                  <div class="prop-leg" style="width:9px;height:40px;border-radius:4px;"></div>
+                  <div class="prop-leg" style="width:9px;height:40px;border-radius:4px;"></div>
+                </div>
+              </div>
+              <span class="prop-label">Bonobo</span>
+              <span class="prop-height">~80 cm</span>
+            </div>
+            <!-- Chimpanzé -->
+            <div class="prop-figure">
+              <div class="prop-body">
+                <div class="prop-head" style="width:30px;height:30px;background:rgba(74,124,89,0.7);border-radius:50%;"></div>
+                <div style="display:flex;gap:2px;margin-top:3px">
+                  <div style="width:9px;height:62px;border-radius:4px;background:rgba(74,124,89,0.6);"></div>
+                  <div style="width:24px;height:52px;border-radius:4px;background:rgba(74,124,89,0.7);"></div>
+                  <div style="width:9px;height:62px;border-radius:4px;background:rgba(74,124,89,0.6);"></div>
+                </div>
+                <div style="display:flex;gap:4px;margin-top:2px;justify-content:center">
+                  <div style="width:10px;height:44px;border-radius:4px;background:rgba(74,124,89,0.75);"></div>
+                  <div style="width:10px;height:44px;border-radius:4px;background:rgba(74,124,89,0.75);"></div>
+                </div>
+              </div>
+              <span class="prop-label">Chimpanzé</span>
+              <span class="prop-height">~95 cm</span>
+            </div>
+            <!-- Gorila -->
+            <div class="prop-figure">
+              <div class="prop-body">
+                <div class="prop-head" style="width:38px;height:36px;background:rgba(30,58,34,0.8);border-radius:50%;border:1px solid rgba(109,171,128,0.3)"></div>
+                <div style="display:flex;gap:2px;margin-top:3px">
+                  <div style="width:13px;height:80px;border-radius:4px;background:rgba(30,58,34,0.7);"></div>
+                  <div style="width:34px;height:70px;border-radius:4px;background:rgba(30,58,34,0.8);"></div>
+                  <div style="width:13px;height:80px;border-radius:4px;background:rgba(30,58,34,0.7);"></div>
+                </div>
+                <div style="display:flex;gap:5px;margin-top:2px;justify-content:center">
+                  <div style="width:14px;height:55px;border-radius:4px;background:rgba(30,58,34,0.8);"></div>
+                  <div style="width:14px;height:55px;border-radius:4px;background:rgba(30,58,34,0.8);"></div>
+                </div>
+              </div>
+              <span class="prop-label">Gorila</span>
+              <span class="prop-height">~170 cm</span>
+            </div>
+            <!-- Humano -->
+            <div class="prop-figure">
+              <div class="prop-body">
+                <div class="prop-head" style="width:26px;height:28px;background:rgba(201,168,76,0.3);border-radius:50%;border:1px solid rgba(201,168,76,0.4)"></div>
+                <div style="display:flex;gap:2px;margin-top:3px">
+                  <div style="width:7px;height:50px;border-radius:4px;background:rgba(201,168,76,0.25);"></div>
+                  <div style="width:20px;height:60px;border-radius:4px;background:rgba(201,168,76,0.3);"></div>
+                  <div style="width:7px;height:50px;border-radius:4px;background:rgba(201,168,76,0.25);"></div>
+                </div>
+                <div style="display:flex;gap:4px;margin-top:2px;justify-content:center">
+                  <div style="width:8px;height:68px;border-radius:4px;background:rgba(201,168,76,0.3);"></div>
+                  <div style="width:8px;height:68px;border-radius:4px;background:rgba(201,168,76,0.3);"></div>
+                </div>
+              </div>
+              <span class="prop-label">Humano</span>
+              <span class="prop-height">~170 cm</span>
+            </div>
+          </div>
+
+          <div class="bar-chart mt-2">
+            <h4>Proporção Braço / Altura (%)</h4>
+            <div class="bar-row" style="--bar-w:95%">
+              <span class="bar-name">Orangotango</span>
+              <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+              <span class="bar-val">~157%</span>
+            </div>
+            <div class="bar-row" style="--bar-w:87%">
+              <span class="bar-name">Gorila</span>
+              <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
+              <span class="bar-val">~145%</span>
+            </div>
+            <div class="bar-row" style="--bar-w:84%">
+              <span class="bar-name">Chimpanzé</span>
+              <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+              <span class="bar-val">~140%</span>
+            </div>
+            <div class="bar-row" style="--bar-w:82%">
+              <span class="bar-name">Bonobo</span>
+              <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+              <span class="bar-val">~138%</span>
+            </div>
+            <div class="bar-row" style="--bar-w:38%">
+              <span class="bar-name">Humano</span>
+              <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+              <span class="bar-val">~85%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Textos morfológicos -->
+      <div class="morfo-items reveal reveal-delay-2">
+        <div class="morfo-item">
+          <div class="morfo-num">01</div>
+          <div class="morfo-text">
+            <h4>Crânio e Cérebro</h4>
+            <p>Crânio mais arredondado que o chimpanzé, com cristas supraorbitais menos proeminentes. Cérebro com volume de 350–400 cm³, exibindo alta densidade de espinhas dendríticas nas regiões associadas à empatia e tomada de decisão moral.</p>
+          </div>
+        </div>
+        <div class="morfo-item">
+          <div class="morfo-num">02</div>
+          <div class="morfo-text">
+            <h4>Membros e Postura</h4>
+            <p>Braços relativamente longos (índice braquial ~138%), ombros estreitos e quadril mais largo que o chimpanzé, favorecendo postura bípede mais frequente. Caminham eretos significativamente mais que outros grandes primatas não humanos.</p>
+          </div>
+        </div>
+        <div class="morfo-item">
+          <div class="morfo-num">03</div>
+          <div class="morfo-text">
+            <h4>Dentição e Mandíbula</h4>
+            <p>Dentes menores e mandíbula menos robusta que o chimpanzé, refletindo dieta com menos carne. Caninos reduzidos em machos correlacionam-se com menor agressividade — uma pressão seletiva única na evolução dos bonobos.</p>
+          </div>
+        </div>
+        <div class="morfo-item">
+          <div class="morfo-num">04</div>
+          <div class="morfo-text">
+            <h4>Pelagem e Pigmentação</h4>
+            <p>Pelagem preta densa, lábios rosados (característica diagnóstica), face totalmente negra desde o nascimento. Tufos de pelos nas laterais do rosto dão aparência mais "juvenil" — neotenia que reflete evolução de comportamentos cooperativos.</p>
+          </div>
+        </div>
+        <div class="morfo-item">
+          <div class="morfo-num">05</div>
+          <div class="morfo-text">
+            <h4>Musculatura</h4>
+            <p>Musculatura menos robusta que o chimpanzé em proporção ao tamanho. Força estimada 1,5× a humana em escalada e braquiação. Mãos com polegar oponível longo, adaptadas a manipulação fina de objetos e ferramentas.</p>
+          </div>
+        </div>
+        <div class="morfo-item">
+          <div class="morfo-num">06</div>
+          <div class="morfo-text">
+            <h4>Pés e Locomoção</h4>
+            <p>Pés preênseis com hálux oponível permitem agarrar galhos. Knuckle-walking como modo primário terrestre, porém frequente locomoção bípede em contextos sociais — até 25% do tempo observado no chão.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EVOLUÇÃO ========== -->
+<section id="evolucao">
+  <div class="container">
+    <span class="label">Biologia Evolutiva</span>
+    <h2 class="section-title reveal">História<br><em>Evolutiva</em></h2>
+    <div class="section-sep"></div>
+    <p class="section-intro reveal reveal-delay-1">A árvore evolutiva dos grandes primatas revela uma história de diversificação, adaptação e parentesco genético que desafia as fronteiras entre humano e animal.</p>
+
+    <div class="dna-bars reveal reveal-delay-2">
+      <div class="dna-card">
+        <span class="dna-pct">98.7%</span>
+        <p class="dna-desc">Identidade genética<br>entre <strong>Bonobo</strong> e Humano</p>
+        <div class="dna-bar-track"><div class="dna-bar-fill" style="width:98.7%"></div></div>
+      </div>
+      <div class="dna-card">
+        <span class="dna-pct">98.6%</span>
+        <p class="dna-desc">Identidade genética<br>entre <strong>Chimpanzé</strong> e Humano</p>
+        <div class="dna-bar-track"><div class="dna-bar-fill" style="width:98.6%"></div></div>
+      </div>
+      <div class="dna-card">
+        <span class="dna-pct">98.3%</span>
+        <p class="dna-desc">Identidade genética<br>entre <strong>Gorila</strong> e Humano</p>
+        <div class="dna-bar-track"><div class="dna-bar-fill" style="width:98.3%"></div></div>
+      </div>
+      <div class="dna-card">
+        <span class="dna-pct">96.9%</span>
+        <p class="dna-desc">Identidade genética<br>entre <strong>Orangotango</strong> e Humano</p>
+        <div class="dna-bar-track"><div class="dna-bar-fill" style="width:96.9%"></div></div>
+      </div>
+    </div>
+
+    <div class="evo-timeline mt-3 reveal reveal-delay-3">
+      <div class="evo-line"></div>
+      <div class="evo-items">
+        <div class="evo-item">
+          <div class="evo-marker">
+            <div class="evo-dot"></div>
+            <span class="evo-mya">~15 Ma</span>
+          </div>
+          <div class="evo-card">
+            <h4>Separação dos Hominídeos</h4>
+            <p>Orangotangos (Pongo) divergem da linhagem africana há ~15 milhões de anos, migrando para o Sudeste Asiático. Gorillas se separam por volta de 9–10 Ma.</p>
+          </div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-marker">
+            <div class="evo-dot"></div>
+            <span class="evo-mya">~7 Ma</span>
+          </div>
+          <div class="evo-card">
+            <h4>Ancestral Comum Humano-Pan</h4>
+            <p>O último ancestral comum de humanos e bonobos/chimpanzés viveu na África. Mudanças climáticas e expansão de savanas criaram pressões seletivas que divergiram as linhagens.</p>
+          </div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-marker">
+            <div class="evo-dot"></div>
+            <span class="evo-mya">~4 Ma</span>
+          </div>
+          <div class="evo-card">
+            <h4>Australopithecus e Bipedia</h4>
+            <p>A linhagem humana evolui bipedia obrigatória. A linhagem Pan manteve locomoção arbórea com capacidade terrestre, preservando o knuckle-walking.</p>
+          </div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-marker">
+            <div class="evo-dot"></div>
+            <span class="evo-mya">~2 Ma</span>
+          </div>
+          <div class="evo-card">
+            <h4>Formação do Rio Congo</h4>
+            <p>O alargamento e aprofundamento do Rio Congo cria barreira geográfica intransponível. Populações ao sul (sem gorillas e outros predadores) evoluem independentemente — os futuros bonobos.</p>
+          </div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-marker">
+            <div class="evo-dot"></div>
+            <span class="evo-mya">Hoje</span>
+          </div>
+          <div class="evo-card">
+            <h4>Pan paniscus — Espécie Única</h4>
+            <p>O isolamento sul-do-Congo produziu uma espécie com características evolutivas únicas: menos agressividade, maior cooperação, estrutura matriarcal — possivelmente resultado da ausência de gorillas como competidores por recursos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONSERVAÇÃO ========== -->
+<section id="conservacao">
+  <div class="container">
+    <span class="label">Crise Ambiental</span>
+    <h2 class="section-title reveal">Conservação<br><em>& Ameaças</em></h2>
+    <div class="section-sep"></div>
+    <p class="section-intro reveal reveal-delay-1">Com menos de 20.000 indivíduos restantes no planeta, o bonobo enfrenta uma crise existencial impulsionada pela ação humana. A extinção desta espécie seria a perda irreversível de nosso parente mais próximo.</p>
+
+    <div class="threat-grid reveal reveal-delay-2">
+      <div class="threat-card">
+        <span class="threat-emoji">🌲</span>
+        <h4>Desmatamento</h4>
+        <p>A bacia do Congo perde 500.000 hectares/ano de floresta. Exploração madeireira, agricultura e mineração destroem habitats irreversivelmente.</p>
+      </div>
+      <div class="threat-card">
+        <span class="threat-emoji">🎯</span>
+        <h4>Caça Ilegal</h4>
+        <p>Caçados para carne de caça ("bushmeat") e capturados vivos para tráfico ilegal de animais. Cada adulto morto pode significar a morte de filhotes dependentes.</p>
+      </div>
+      <div class="threat-card">
+        <span class="threat-emoji">⚔️</span>
+        <h4>Conflitos Armados</h4>
+        <p>A RDC é palco de conflitos crônicos que impossibilitam fiscalização, aumentam caça de subsistência e destroem esforços de conservação.</p>
+      </div>
+      <div class="threat-card">
+        <span class="threat-emoji">🌡️</span>
+        <h4>Mudanças Climáticas</h4>
+        <p>Alterações nos padrões de chuva afetam disponibilidade de frutos. Projeções indicam redução de 75% do habitat adequado até 2050.</p>
+      </div>
+    </div>
+
+    <!-- Estatísticas de população -->
+    <div class="pop-counter reveal reveal-delay-3">
+      <div class="pop-box">
+        <span class="pop-number">~10K–20K</span>
+        <span class="pop-label">Bonobos estimados em liberdade</span>
+        <p class="pop-trend">↓ Tendência de declínio</p>
+      </div>
+      <div class="pop-box">
+        <span class="pop-number">~350</span>
+        <span class="pop-label">Indivíduos em programas ex situ</span>
+        <p class="pop-trend">↑ Programas de reprodução</p>
+      </div>
+    </div>
+
+    <!-- Escala de risco de extinção -->
+    <div class="risk-section reveal reveal-delay-4">
+      <h3>Status na Lista Vermelha da IUCN</h3>
+      <div class="risk-scale">
+        <div class="risk-seg rs-lc" title="Menor Preocupação"></div>
+        <div class="risk-seg rs-nt" title="Quase Ameaçado"></div>
+        <div class="risk-seg rs-vu" title="Vulnerável"></div>
+        <div class="risk-seg rs-en" title="Em Perigo"></div>
+        <div class="risk-seg rs-cr" title="Criticamente em Perigo"></div>
+        <div class="risk-seg rs-ew" title="Extinto na Natureza"></div>
+        <div class="risk-seg rs-ex" title="Extinto"></div>
+      </div>
+      <div class="risk-labels">
+        <span>LC</span>
+        <span>NT</span>
+        <span>VU</span>
+        <span style="color:var(--gold)">EN ◄ Bonobo</span>
+        <span>CR</span>
+        <span>EW</span>
+        <span>EX</span>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.9rem;color:var(--muted)">O bonobo está classificado como <strong style="color:#e76f51">Em Perigo (EN)</strong> pela IUCN desde 1996. O ritmo de destruição de habitat aponta para reclassificação para Criticamente em Perigo (CR) nas próximas décadas sem intervenção imediata.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CURIOSIDADES ========== -->
+<section id="curiosidades">
+  <div class="container">
+    <span class="label">Fatos Científicos</span>
+    <h2 class="section-title reveal text-center">Curiosidades<br><em>Extraordinárias</em></h2>
+    <div class="section-sep" style="margin:0 auto 3rem"></div>
+
+    <div class="curiosity-grid">
+      <div class="curiosity-card reveal reveal-delay-1">
+        <span class="curiosity-num">01</span>
+        <h4>Lábios Rosados Únicos</h4>
+        <p>Os bonobos nascem com lábios e rosto completamente rosados — e permanecem assim. Nenhum outro grande primata possui esta característica pigmentação que os torna facilmente identificáveis e considerados de aparência mais "juvenil".</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-2">
+        <span class="curiosity-num">02</span>
+        <h4>Descoberta Mais Recente</h4>
+        <p>O bonobo é o último grande mamífero descoberto pela ciência ocidental — em 1929. Por décadas foi chamado de "chimpanzé-anão" antes de ser reconhecido como espécie distinta. O Congo guarda seus segredos bem.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-3">
+        <span class="curiosity-num">03</span>
+        <h4>Kanzi e a Linguagem Simbólica</h4>
+        <p>O bonobo Kanzi, estudado pelo Dr. Sue Savage-Rumbaugh, aprendeu a usar mais de 400 lexigramas (símbolos em teclado), compreende frases em inglês falado e demonstrou capacidade de comunicação sintática não ensinada diretamente.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-1">
+        <span class="curiosity-num">04</span>
+        <h4>Altruísmo com Estranhos</h4>
+        <p>Em experimentos controlados, bonobos compartilharam comida voluntariamente com bonobos desconhecidos — e até com humanos — mesmo sem recompensa. Chimpanzés raramente fazem isso. Esta cooperação espontânea é surpreendentemente semelhante à humana.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-2">
+        <span class="curiosity-num">05</span>
+        <h4>Uso de Ferramentas Cultural</h4>
+        <p>Grupos diferentes de bonobos possuem "culturas" distintas de uso de ferramentas — aprendidas socialmente, não instintivas. Algumas populações usam folhas como esponjas; outras fabricam "bengalas" para apoio ao caminhar. Há transmissão cultural multigeracional.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-3">
+        <span class="curiosity-num">06</span>
+        <h4>Sem Observação de Morte de Coespecífico</h4>
+        <p>Em mais de 50 anos de estudos de campo intensivos, pesquisadores nunca documentaram um bonobo matando outro bonobo. Isso os coloca em classe única entre grandes primatas — incluindo humanos — em termos de coexistência pacífica intraespécie.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-1">
+        <span class="curiosity-num">07</span>
+        <h4>Fêmeas que "Adotam" Machos Adultos</h4>
+        <p>As fêmeas adultas frequentemente desenvolvem relações de "adoção" com machos jovens não relacionados, ajudando-os a ascender na hierarquia social, a obter parceiros e a competir por recursos. Estruturas de solidariedade únicas no reino animal.</p>
+      </div>
+      <div class="curiosity-card reveal reveal-delay-2">
+        <span class="curiosity-num">08</span>
+        <h4>Posição Evolutiva Dupla</h4>
+        <p>Bonobos e chimpanzés são igualmente próximos de humanos em termos genéticos. Assim, para entender nossa história evolutiva, precisamos estudar ambos — o bonobo como modelo de cooperação e empatia, o chimpanzé como modelo de competição e poder.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALERIA ========== -->
+<section id="galeria">
+  <div class="container">
+    <span class="label">Galeria Visual</span>
+    <h2 class="section-title reveal">Retratos<br><em>da Floresta</em></h2>
+    <div class="section-sep"></div>
+  </div>
+
+  <div class="container">
+    <div class="gallery-grid reveal">
+      <div class="gallery-item gi-bg-1">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">🐒</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Retrato — Pan paniscus</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>Rosto de Bonobo Adulto</h4>
+            <p>Floresta do Congo · RDC</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item gi-bg-2">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">🌿</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Habitat · Floresta Equatorial</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>Dossel da Floresta Tropical</h4>
+            <p>Bacia do Congo · África Central</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item gi-bg-3">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">🤱</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Filhote com mãe</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>Vínculo Materno</h4>
+            <p>Filhotes permanecem com a mãe por 5+ anos</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item gi-bg-4">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">🛠️</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Uso de Ferramentas</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>Uso de Ferramentas</h4>
+            <p>Transmissão cultural entre gerações</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item gi-bg-5">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">🌊</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Rio Congo</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>O Rio que Criou uma Espécie</h4>
+            <p>Barreira evolutiva por 2 milhões de anos</p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-item gi-bg-6">
+        <div class="gi-inner">
+          <div class="gi-content">
+            <span class="gi-emoji">👥</span>
+            <p style="font-size:0.8rem;color:rgba(240,230,204,0.4)">Grupo social</p>
+          </div>
+          <div class="gi-overlay"></div>
+          <div class="gi-caption">
+            <h4>Dinâmica Social do Grupo</h4>
+            <p>Fissão-fusão — grupos de 6 a 100 indivíduos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>PrimateLab</h3>
+        <p>Uma plataforma educacional dedicada ao estudo e conservação dos grandes primatas. Ciência acessível, rigorosa e apaixonada pela vida selvagem.</p>
+        <div class="footer-social">
+          <div class="social-btn">✦</div>
+          <div class="social-btn">◈</div>
+          <div class="social-btn">⬡</div>
+          <div class="social-btn">▲</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="#primatas">Grandes Primatas</a></li>
+          <li><a href="#bonobo">O Bonobo</a></li>
+          <li><a href="#comparacao">Comparações</a></li>
+          <li><a href="#morfologia">Morfologia</a></li>
+          <li><a href="#evolucao">Evolução</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Recursos</h4>
+        <ul>
+          <li><a href="#">Biblioteca Científica</a></li>
+          <li><a href="#">Base de Dados</a></li>
+          <li><a href="#">Documentários</a></li>
+          <li><a href="#">Pesquisadores</a></li>
+          <li><a href="#">Glossário</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Conservação</h4>
+        <ul>
+          <li><a href="#">Adote um Habitat</a></li>
+          <li><a href="#">ONG Parceiras</a></li>
+          <li><a href="#">IUCN Red List</a></li>
+          <li><a href="#">WWF Africa</a></li>
+          <li><a href="#">Bonobo Project</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 PrimateLab · Conteúdo educacional baseado em literatura científica revisada por pares.</p>
+      <span class="footer-credits">PRIMATOLOGIA · BIOLOGIA EVOLUTIVA · CONSERVAÇÃO</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+  /* ─── Navbar scroll ─── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ─── Mobile menu ─── */
+  function toggleNav() {
+    const links = document.getElementById('navLinks');
+    links.classList.toggle('open');
+  }
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  /* ─── Intersection Observer — Reveal on scroll ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ─── Bar chart reveal ─── */
+  const barRows = document.querySelectorAll('.bar-row');
+  const barIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        barIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  barRows.forEach(el => barIO.observe(el));
+
+  /* ─── Smooth parallax on hero orbs ─── */
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    const orbs = document.querySelectorAll('.hero-orb');
+    orbs.forEach((orb, i) => {
+      const speed = (i + 1) * 0.18;
+      orb.style.transform = `translateY(${sy * speed}px)`;
+    });
+    // Parallax on hero primate
+    const primate = document.querySelector('.hero-primate');
+    if (primate) primate.style.transform = `translateY(${sy * 0.15}px)`;
+  });
+</script>
+
+</body>
+</html>
